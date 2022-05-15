@@ -79,7 +79,7 @@ public class AuthController {
                 .body(new ApiResponse(true, "성공적으로 계정 생성이 되었습니다."));
     }
     
-    @GetMapping("/check")
+    @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody AuthResponse authResponse) {
     	User user = new User();
     	if(tokenProvider.validateToken(authResponse.getAccessToken())) {
