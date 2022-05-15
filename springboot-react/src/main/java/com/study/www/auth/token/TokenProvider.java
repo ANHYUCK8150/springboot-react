@@ -1,6 +1,9 @@
 package com.study.www.auth.token;
 
 import io.jsonwebtoken.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,9 @@ public class TokenProvider {
 	private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
     private AppProperties appProperties;
+    @Getter
+    @Setter
+    private String jwtMsg;
 
     public TokenProvider(AppProperties appProperties) {
         this.appProperties = appProperties;
@@ -51,14 +57,19 @@ public class TokenProvider {
             return true;
         } catch (SignatureException ex) {
             logger.error("유효하지 않은 JWT 서명");
+            this.jwtMsg = "유효하지 않은 JWT 서명";
         } catch (MalformedJwtException ex) {
             logger.error("유효하지 않은 JWT 토큰");
+            this.jwtMsg = "유효하지 않은 JWT 토큰";
         } catch (ExpiredJwtException ex) {
             logger.error("만료된 JWT 토큰");
+            this.jwtMsg = "만료된 JWT 토큰";
         } catch (UnsupportedJwtException ex) {
             logger.error("지원하지 않는 JWT 토큰");
+            this.jwtMsg = "지원하지 않는 JWT 토큰";
         } catch (IllegalArgumentException ex) {
             logger.error("비어있는 JWT");
+            this.jwtMsg = "비어있는 JWT";
         }
         return false;
     }
