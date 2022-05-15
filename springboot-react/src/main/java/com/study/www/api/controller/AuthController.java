@@ -81,7 +81,7 @@ public class AuthController {
     }
     
     @PostMapping("/check")
-    public UserDto check(@RequestBody AuthResponse authResponse) {
+    public ResponseEntity<?> check(@RequestBody AuthResponse authResponse) {
     	UserDto user = new UserDto();
     	if(tokenProvider.validateToken(authResponse.getAccessToken())) {
     		Long userId = tokenProvider.getUserIdFromToken(authResponse.getAccessToken());
@@ -93,9 +93,11 @@ public class AuthController {
     			user.setEmail(use.getEmail());
     			user.setName(use.getName());
     		}
+    	}else {
+    		return ResponseEntity.ok(tokenProvider.getJwtMsg());
     	}
-    	return user;
-    	//return ResponseEntity.ok(user);
+
+    	return ResponseEntity.ok(user);
     }
 
 }

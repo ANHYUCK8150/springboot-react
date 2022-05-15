@@ -41,6 +41,12 @@ public class User {
 
     @Column
     private String providerId;
+    
+    @Column
+    private String latitude;
+    
+    @Column 
+    private String longitude;
 
     @Builder
     public User(String name, String email, String imageUrl, Boolean emailVerified, String password, AuthProvider provider, String providerId) {
