@@ -20,6 +20,7 @@ import com.study.www.api.entity.dto.ApiResponse;
 import com.study.www.api.entity.dto.AuthResponse;
 import com.study.www.api.entity.dto.LoginRequest;
 import com.study.www.api.entity.dto.SignUpRequest;
+import com.study.www.api.entity.dto.UserDto;
 import com.study.www.api.repository.UserRepository;
 import com.study.www.auth.entity.AuthProvider;
 import com.study.www.auth.token.TokenProvider;
@@ -80,17 +81,21 @@ public class AuthController {
     }
     
     @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody AuthResponse authResponse) {
-    	User user = new User();
+    public UserDto check(@RequestBody AuthResponse authResponse) {
+    	UserDto user = new UserDto();
     	if(tokenProvider.validateToken(authResponse.getAccessToken())) {
     		Long userId = tokenProvider.getUserIdFromToken(authResponse.getAccessToken());
     		
     		if(userId != null) {
-    			user = userRepository.getById(userId);
+    			User use = userRepository.getById(userId);
+    			
+    			user.setId(use.getId());
+    			user.setEmail(use.getEmail());
+    			user.setName(use.getName());
     		}
     	}
-    	
-    	return ResponseEntity.ok(user);
+    	return user;
+    	//return ResponseEntity.ok(user);
     }
 
 }

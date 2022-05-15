@@ -9,6 +9,10 @@ public class SignUpRequest {
     private String name;
     private String email;
     private String password;
+    
+    public SignUpRequest() {
+    	
+    }
 
     @Builder
     public SignUpRequest(String name, String email, String password) {
