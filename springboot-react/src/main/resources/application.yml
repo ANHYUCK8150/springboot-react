@@ -2,6 +2,9 @@ server:
   port: 8090
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
   profiles.active: local
   # 데이터 소스 설정
   datasource:
