@@ -19,14 +19,16 @@ public interface AddressRepository extends JpaRepository<Town, Long> {
 
 	List<Town> getByName(String string);
 
-	Town getByCityAndName(String string, String string2);
+	List<Town> getByCityAndName(String string, String string2);
 
-	Town getByCityAndDistrictAndName(String string, String string2, String string3);
+	List<Town> getByCityAndDistrictAndName(String string, String string2, String string3);
 
-	Town getByCityAndDistrictAndNameAndEtc(String string, String string2, String string3, String string4);
+	List<Town> getByCityAndDistrictAndNameAndEtc(String string, String string2, String string3, String string4);
 	
 	@Query(getNearsql)
 	List<Town> getNearAddress(@Param("latitude") String latitude,@Param("longitude") String longitude,@Param("range") double range);
+
+	List<Town> getByDistrictAndName(String string, String string2);
 
 
 }

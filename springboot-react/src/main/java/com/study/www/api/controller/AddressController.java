@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AddressController {
 	private final AddressService addressService;
 	
+	@ApiOperation(value="행정동 검색으로 주변 행정동 반환", notes="입력 순서에 따른 로직(띄어쓰기로 구분) => 동 / 시 동 or 구 동 / 시 구 동")
 	@GetMapping("/location")
 	public ResponseEntity<?> location(@RequestParam("search") String search
 			,@RequestParam("range") double range){
@@ -47,7 +48,7 @@ public class AddressController {
 		return ResponseEntity.ok(townIdList);
 	}
 	
-	@ApiOperation(value="해당 행정동 주변 행정동 검색", notes="townId와 range를 입력 받는다.")
+	@ApiOperation(value="해당 행정동 주변 행정동 반환", notes="townId와 range를 입력 받는다.")
 	@GetMapping("/nearTown")
 	public ResponseEntity<?> nearTown(@RequestParam("townId") String townId
 			,@RequestParam("range") double range){

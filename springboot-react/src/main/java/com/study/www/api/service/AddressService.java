@@ -27,21 +27,31 @@ public class AddressService {
 	public List<TownDto> townList(String search, double range) {
 		String[] searchArr = search.split(" ");
 		List<TownDto> townList = new ArrayList<TownDto>();
-		Town townInfo = new Town();
-		
+		List<Town> townInfo = new ArrayList<Town>();	
 		if(searchArr.length == 1) {
-			//townInfo = addressRepository.getByName(searchArr[0]);
+			townInfo = addressRepository.getByName(searchArr[0]);
 		}else if(searchArr.length == 2) {
 			townInfo = addressRepository.getByCityAndName(searchArr[0],searchArr[1]);
+			if(townInfo.size() == 0) {
+				townInfo = addressRepository.getByDistrictAndName(searchArr[0],searchArr[1]);
+			}
 		}else if(searchArr.length == 3) {
 			townInfo = addressRepository.getByCityAndDistrictAndName(searchArr[0],searchArr[1],searchArr[2]);
 		}else if(searchArr.length == 4) {
 			townInfo = addressRepository.getByCityAndDistrictAndNameAndEtc(searchArr[0],searchArr[1],searchArr[2],searchArr[3]);
 		}
 		
-		if(townInfo.getId() != null) {
-			townList = addressRepository.getNearAddress(townInfo.getLatitude(),townInfo.getLongitude(),range).stream().map(c->new TownDto(c)).collect(Collectors.toList());
-			//townList = addressRepository.getNearAddress("37.5234220000","126.8586800000","1").stream().map(c->new TownDto(c)).collect(Collectors.toList());
+		if(townInfo.size() > 0) {
+			if(townInfo.size() == 1) {
+				townList = addressRepository.getNearAddress(townInfo.get(0).getLatitude(), townInfo.get(0).getLongitude(), range).stream().map(c->new TownDto(c)).collect(Collectors.toList());
+			}else {
+				for(int i = 0;i<townInfo.size();i++) {
+					List<TownDto> list = addressRepository.getNearAddress(townInfo.get(i).getLatitude(), townInfo.get(i).getLongitude(), range).stream().map(c->new TownDto(c)).collect(Collectors.toList());
+					for(TownDto townDto : list) {
+						townList.add(townDto);
+					}
+				}
+			}
 		}
 		
 		return townList;
