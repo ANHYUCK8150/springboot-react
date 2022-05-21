@@ -1,7 +1,6 @@
 package com.study.www.api.repository;
 
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.study.www.api.entity.Town;
-import com.study.www.api.entity.dto.TownDto;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Town, Long> {
@@ -29,9 +27,6 @@ public interface AddressRepository extends JpaRepository<Town, Long> {
 	
 	@Query(getNearsql)
 	List<Town> getNearAddress(@Param("latitude") String latitude,@Param("longitude") String longitude,@Param("range") double range);
-	
-	@Query(getNearsql)
-	List<Town> getNearTown(String latitude, String longitude, double range);
 
 
 }

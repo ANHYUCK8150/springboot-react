@@ -55,9 +55,9 @@ public class AddressService {
 		Town townInfo = addressRepository.getById(Long.parseLong(townId));
 		
 		List<TownDto> townList = new ArrayList<TownDto>();
-		
+		System.out.println(townInfo.getLatitude() + " : " + townInfo.getLongitude());
 		if(townInfo != null) {
-			townList = addressRepository.getNearTown(townInfo.getLatitude(),townInfo.getLongitude(),range).stream().map(c->new TownDto(c)).collect(Collectors.toList());
+			townList = addressRepository.getNearAddress(townInfo.getLatitude(),townInfo.getLongitude(),range).stream().map(c->new TownDto(c)).collect(Collectors.toList());
 		}
 		return townList;
 	}

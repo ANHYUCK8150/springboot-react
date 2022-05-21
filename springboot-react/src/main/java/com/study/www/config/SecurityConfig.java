@@ -33,6 +33,24 @@ import com.study.www.auth.token.TokenAuthenticationFilter;
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	private static final String[] PERMIT_URL_ARRAY = {
+            /* auth*/
+			"/auth/**", "/oauth2/**",
+			/* api */
+			"/api/**",
+			/* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+	
     private final CustomUserDetailsService customUserDetailsService;
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -104,8 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                .authorizeRequests()
 	                    .antMatchers("/").permitAll()
 	                    //.antMatchers("/api/**").hasAnyRole(Role.GUEST.name() ,Role.USER.name(), Role.ADMIN.name())
-	                    .antMatchers("/api/**").permitAll()
-	                    .antMatchers("/auth/**", "/oauth2/**").permitAll()
+	                    .antMatchers(PERMIT_URL_ARRAY).permitAll()
 	                    .anyRequest().authenticated()
                 .and()
                     .oauth2Login()
