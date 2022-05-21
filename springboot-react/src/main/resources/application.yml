@@ -102,5 +102,6 @@ app:
     # We're not using cookies because they won't work well in mobile clients.
     authorizedRedirectUris: 
       - http://localhost:3000/oauth/redirect
+      - http://localhost:3001/oauth/redirect
       - http://27.96.134.65/oauth2/redirect
 #      - myiosapp://oauth2/redirect
