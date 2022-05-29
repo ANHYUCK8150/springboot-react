@@ -1,0 +1,56 @@
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    color: white;
+    height: 60%;
+    justify-content: flex-start;
+  }
+  
+  .activeContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .activeItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .activeItem button{
+    display: flex;
+    align-items: center;
+    width:100%;
+  }
+
+  .activeItem button img{
+    border-radius: 100px;
+  }
+
+  .activeItem button h1{
+    margin:10px;
+  }
+  
+  .activeContainer img {
+    padding-left: 10px;
+    border-radius: 100px;
+  }
+
+  .activeContainer h1 {
+    padding-left: 10px;
+  }
+  
+  .textContainer h1 {
+    margin-bottom: 0px;
+  }
+
+  .line {
+      border-bottom: 1px solid white;
+  }
+  
+  @media (min-width: 320px) and (max-width: 1200px) {
+    .textContainer {
+      display: none;
+    }
+  }
