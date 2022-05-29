@@ -79,25 +79,5 @@ public class AuthController {
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "성공적으로 계정 생성이 되었습니다."));
     }
-    
-    @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody AuthResponse authResponse) {
-    	UserDto user = new UserDto();
-    	if(tokenProvider.validateToken(authResponse.getAccessToken())) {
-    		Long userId = tokenProvider.getUserIdFromToken(authResponse.getAccessToken());
-    		
-    		if(userId != null) {
-    			User use = userRepository.getById(userId);
-    			
-    			user.setId(use.getId());
-    			user.setEmail(use.getEmail());
-    			user.setName(use.getName());
-    		}
-    	}else {
-    		return ResponseEntity.ok(tokenProvider.getJwtMsg());
-    	}
-
-    	return ResponseEntity.ok(user);
-    }
 
 }

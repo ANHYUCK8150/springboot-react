@@ -1,12 +1,20 @@
 package com.study.www.api.entity.dto;
 
-import lombok.Data;
+import com.study.www.api.entity.User;
 
-@Data
+import lombok.Getter;
+
+@Getter
 public class UserDto {
 	    private Long id;
 	    private String name;
 	    private String email;
-	    private String distance;
-
+	    private String imageUrl;
+	    
+	    public UserDto(User user) {
+	    	this.id = user.getId();
+	    	this.name = user.getName();
+	    	this.email = user.getEmail();
+	    	this.imageUrl = user.getImageUrl();
+	    }
 }
