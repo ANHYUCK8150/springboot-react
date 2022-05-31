@@ -23,7 +23,8 @@ public class ChatService {
 	public List<Chatting> getChatList(Long roomId) {
 		return chattingRepository.getByRoomId(roomId);
 	}
-
+	
+	@Transactional
 	public void insertChatting(ChatMessage messageDTO) {
 		Chatting chatting = messageDTO.toEntity();
 		chattingRepository.save(chatting);
