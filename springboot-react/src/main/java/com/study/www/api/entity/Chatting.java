@@ -30,12 +30,11 @@ public class Chatting extends BaseTimeEntity{
 	private int notRead;
 	
 	@ManyToOne(optional = false, targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn
-	@JsonIgnore
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@ManyToOne(targetEntity = Room.class, fetch = FetchType.EAGER)
-	@JoinColumn
+	@JoinColumn(name = "room_id")
 	@JsonIgnore
 	private Room room;
 	

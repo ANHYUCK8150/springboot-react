@@ -11,6 +11,7 @@ public class ChatMessage {
 	private String message;
     private User user;
     private Room room;
+    private String type = "M";
     
     public ChatMessage() {}
     
