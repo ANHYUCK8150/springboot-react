@@ -1,7 +1,23 @@
 server:
   port: 8090
 
+cloud:
+  aws:
+    credentials:
+      access-key: DHg8oKLhDFjfMqTfqYhS
+      secret-key: eV2eJustfRZwxu8p1uX5u6xE1NE4VdmVk6zv1fcC
+    s3:
+      bucket: hyuck
+    region:
+      static: kr-standard
+    stack:
+      auto: false
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -12,7 +28,7 @@ spring:
   # 데이터 소스 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/study?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/study?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
     username: root
     password: QKRzktm12@
     hikari:
@@ -77,6 +93,8 @@ spring:
             - profile_nickname
             - profile_image
             - account_email
+            - gender
+            - age_range
           clientName: Kakao
       # Provider 설정
       provider:

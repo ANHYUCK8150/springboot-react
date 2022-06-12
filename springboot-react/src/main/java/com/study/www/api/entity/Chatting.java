@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,32 +16,29 @@ import lombok.NoArgsConstructor;
 @Entity(name = "chatting")
 @Getter
 @NoArgsConstructor
-public class Chatting extends BaseTimeEntity{
+public class Chatting extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	private String message;
-	
+
 	@Column
 	private int notRead;
-	
+
 	@ManyToOne(optional = false, targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@ManyToOne(targetEntity = Room.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "room_id")
-	@JsonIgnore
-	private Room room;
-	
+
+	private Long roomId;
+
 	@Builder
-	public Chatting(Long id, String message, int notRead, User user, Room room) {
+	public Chatting(Long id, String message, int notRead, User user, Long roomId) {
 		this.id = id;
 		this.message = message;
 		this.notRead = notRead;
 		this.user = user;
-		this.room = room;
+		this.roomId = roomId;
 	}
 }

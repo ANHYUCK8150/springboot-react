@@ -1,67 +1,78 @@
 package com.study.www.api.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.study.www.auth.entity.AuthProvider;
 import com.sun.istack.NotNull;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column
+	private String name;
 
-    @Column(nullable = false)
-    private String email;
+	@Column(nullable = false)
+	private String email;
 
-    @Column
-    private String imageUrl;
+	@Column
+	private String imageUrl;
 
-    @Column
-    private Boolean emailVerified = false;
+	@NotNull
+	@JsonIgnore
+	@Enumerated(EnumType.STRING)
+	private AuthProvider provider;
 
-    @JsonIgnore
-    @Column
-    private String password;
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-    @NotNull
-    @JsonIgnore
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
+	@Column
+	private String providerId;
 
-    @Column
-    private String providerId;
-    
-    @Column
-    private String latitude;
-    
-    @Column 
-    private String longitude;
+	@Column
+	private String gender;
 
-    @Builder
-    public User(String name, String email, String imageUrl, Boolean emailVerified, String password, AuthProvider provider, String providerId) {
-        this.name = name;
-        this.email = email;
-        this.imageUrl = imageUrl;
-        this.emailVerified = emailVerified;
-        this.password = password;
-        this.provider = provider;
-        this.providerId = providerId;
-    }
+	@Column
+	private String age;
 
-    public User update(String name, String imageUrl) {
-        this.name = name;
-        this.imageUrl = imageUrl;
-        return this;
-    }
+	@Builder
+	public User(String name, String email, String imageUrl, Role role, AuthProvider provider, String providerId,
+		String gender, String age) {
+		this.name = name;
+		this.email = email;
+		this.imageUrl = imageUrl;
+		this.role = role;
+		this.provider = provider;
+		this.providerId = providerId;
+		this.gender = gender;
+		this.age = age;
+	}
+
+	public User imageUpdate(String imageUrl) {
+		this.imageUrl = imageUrl;
+		return this;
+	}
+
+	public User nicknameUpdate(String name) {
+		this.name = name;
+		return this;
+	}
+
 }

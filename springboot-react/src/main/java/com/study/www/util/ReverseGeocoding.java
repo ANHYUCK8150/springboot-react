@@ -1,0 +1,83 @@
+package com.study.www.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.study.www.town.dto.TownDto;
+
+public class ReverseGeocoding {
+	private String apiurl = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc";
+	private String clientId = "zm0p3diwp9";
+	private String clientKey = "GSHzx52UKdBkcXiu6z3bNZ8TNgQgCFT3TelH7uXo";
+
+	public TownDto getAddress(Double latitude, Double longitude) {
+
+		String api = apiurl + "?coords=" + longitude + "," + latitude + "&orders=legalcode&output=json";
+		StringBuffer sb = new StringBuffer();
+		TownDto townDto = new TownDto();
+
+		try {
+			URL url = new URL(api);
+			HttpsURLConnection http = (HttpsURLConnection)url.openConnection();
+			http.setRequestProperty("Content-Type", "application/json");
+			http.setRequestProperty("X-NCP-APIGW-API-KEY-ID", clientId);
+			http.setRequestProperty("X-NCP-APIGW-API-KEY", clientKey);
+			http.setRequestMethod("GET");
+			http.connect();
+
+			InputStreamReader in = new InputStreamReader(http.getInputStream(), "utf-8");
+			BufferedReader br = new BufferedReader(in);
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject)parser.parse(sb.toString());
+			JSONArray jsonArray = (JSONArray)jsonObject.get("results");
+			JSONObject jsonResult = (JSONObject)parser.parse(jsonArray.get(0).toString());
+
+			//TownID값과 동일함.
+			JSONObject jsonCode = (JSONObject)jsonResult.get("code");
+			townDto.setId(Long.parseLong(jsonCode.get("id").toString()));
+
+			//주소
+			JSONObject jsonRegion = (JSONObject)jsonResult.get("region");
+
+			//시도
+			JSONObject jsonCity = (JSONObject)jsonRegion.get("area1");
+			townDto.setCity(jsonCity.get("name").toString());
+
+			//시군구
+			JSONObject jsonDistrict = (JSONObject)jsonRegion.get("area2");
+			townDto.setDistrict(jsonDistrict.get("name").toString());
+
+			//읍면동
+			JSONObject jsonName = (JSONObject)jsonRegion.get("area3");
+			townDto.setName(jsonName.get("name").toString());
+
+			//하위
+			JSONObject jsonEtc = (JSONObject)jsonRegion.get("area4");
+			townDto.setEtc(jsonEtc.get("name").toString());
+
+			townDto.setAdress(townDto.getCity(), townDto.getDistrict(), townDto.getName(), townDto.getEtc());
+
+			br.close();
+			in.close();
+			http.disconnect();
+
+		} catch (IOException e) {} catch (ParseException e) {}
+
+		return townDto;
+	}
+}
