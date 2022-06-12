@@ -1,6 +1,6 @@
 package com.study.www.api.entity.dto;
 
-import com.study.www.api.entity.Town;
+import com.study.www.town.entity.Town;
 
 import lombok.Getter;
 

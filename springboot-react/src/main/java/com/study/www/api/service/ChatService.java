@@ -2,6 +2,7 @@ package com.study.www.api.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,32 +24,42 @@ public class ChatService {
 	public List<Chatting> getChatList(Long roomId) {
 		return chattingRepository.getByRoomId(roomId);
 	}
-	
+
 	@Transactional
 	public void insertChatting(ChatMessage messageDTO) {
 		Chatting chatting = messageDTO.toEntity();
 		chattingRepository.save(chatting);
-		
+
 	}
-	
+
 	@Transactional
 	public void checkRoom(Long room) {
 		Room roomInfo = roomRepository.getById(room);
-		
-		if(roomInfo == null) {
+
+		if (roomInfo == null) {
 			roomRepository.save(
-					Room.builder()
+				Room.builder()
 					.id(room)
 					.lastChat("")
-					.build()
-				);
+					.build());
 		}
-		
+
 	}
 
 	public Room getRoom(Long roomId) {
 		return roomRepository.getById(roomId);
 	}
-	
-	
+
+	public List<Room> getRoomList(Long userId) {
+		return roomRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedDate"));
+	}
+
+	@Transactional
+	public void updateLastChat(ChatMessage messageDTO) {
+		Room room = new Room(messageDTO.getRoomId(), messageDTO.getMessage());
+
+		roomRepository.save(room);
+
+	}
+
 }

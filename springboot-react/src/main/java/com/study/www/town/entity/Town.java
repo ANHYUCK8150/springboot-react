@@ -1,11 +1,7 @@
-package com.study.www.api.entity;
-
-import java.math.BigDecimal;
+package com.study.www.town.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Builder;
@@ -17,29 +13,29 @@ import lombok.NoArgsConstructor;
 @Entity(name = "town")
 public class Town {
 	@Id
-	@Column(name="town_id")
+	@Column
 	private Long id;
-	
-	@Column
+
+	@Column(length = 10)
 	private String city;
-	
-	@Column
+
+	@Column(length = 20)
 	private String district;
-	
-	@Column(name="town_name")
+
+	@Column(length = 10)
 	private String name;
-	
-	@Column
+
+	@Column(length = 10)
 	private String etc;
-	
+
 	@Column(precision = 18, scale = 10)
-	private String latitude;
-	
+	private Double latitude;
+
 	@Column(precision = 18, scale = 10)
-	private String longitude;
-	
+	private Double longitude;
+
 	@Builder
-	public Town(Long id, String city, String district, String name, String etc, String latitude, String longitude) {
+	public Town(Long id, String city, String district, String name, String etc, Double latitude, Double longitude) {
 		this.id = id;
 		this.city = city;
 		this.district = district;
@@ -48,6 +44,5 @@ public class Town {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
 
 }
