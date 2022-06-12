@@ -2,12 +2,9 @@ package com.study.www.api.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -27,18 +24,18 @@ public class Chatting extends BaseTimeEntity {
 	@Column
 	private int notRead;
 
-	@ManyToOne(optional = false, targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@Column
+	private Long userId;
 
+	@Column
 	private Long roomId;
 
 	@Builder
-	public Chatting(Long id, String message, int notRead, User user, Long roomId) {
+	public Chatting(Long id, String message, int notRead, Long userId, Long roomId) {
 		this.id = id;
 		this.message = message;
 		this.notRead = notRead;
-		this.user = user;
+		this.userId = userId;
 		this.roomId = roomId;
 	}
 }
