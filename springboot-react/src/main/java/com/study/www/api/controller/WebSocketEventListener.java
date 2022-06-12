@@ -39,7 +39,7 @@ public class WebSocketEventListener {
 			int idx = 0;
 			for (UserDto user : userList) {
 
-				if (user.getId().equals(chatMessage.getUser().getId())) {
+				if (user.getId().equals(chatMessage.getUserId())) {
 					userList.remove(idx);
 					break;
 				}

@@ -21,6 +21,12 @@ public class Room extends BaseTimeEntity {
 	@Column
 	private String lastChat;
 
+	@Column
+	private Long hostId;
+
+	@Column
+	private Long guestId;
+
 	@Builder
 	public Room(Long id, String lastChat) {
 		this.id = id;

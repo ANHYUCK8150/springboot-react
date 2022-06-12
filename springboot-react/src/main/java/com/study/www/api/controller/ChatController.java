@@ -14,8 +14,10 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.www.api.entity.User;
 import com.study.www.api.entity.dto.ChatMessage;
 import com.study.www.api.entity.dto.UserDto;
+import com.study.www.api.repository.UserRepository;
 import com.study.www.api.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ public class ChatController {
 
 	private final SimpMessagingTemplate simpMessagingTemplate;
 
+	private final UserRepository userRepository;
+
 	private final ChatService chatService;
 
 	@MessageMapping("/chat")
@@ -38,7 +42,7 @@ public class ChatController {
 		chatService.insertChatting(messageDTO);
 		chatService.updateLastChat(messageDTO);
 
-		System.out.println(messageDTO.getUser().getId() + " : " + messageDTO.getMessage() + " : roomid = "
+		System.out.println(messageDTO.getUserId() + " : " + messageDTO.getMessage() + " : roomid = "
 			+ messageDTO.getRoomId());
 
 		this.simpMessagingTemplate.convertAndSend("/topic/addChatToClient/" + messageDTO.getRoomId(), messageDTO);
@@ -50,7 +54,8 @@ public class ChatController {
 	@MessageMapping("/join")
 	public void joinUser(@Payload
 	ChatMessage messageDTO, SimpMessageHeaderAccessor headerAccessor) {
-		UserDto userDto = new UserDto(messageDTO.getUser());
+		User user = userRepository.getById(messageDTO.getUserId());
+		UserDto userDto = new UserDto(user);
 		userList.add(userDto);
 
 		List<UserDto> dicList = deduplication(userList, UserDto::getId);
