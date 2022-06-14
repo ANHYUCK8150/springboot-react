@@ -17,7 +17,7 @@ public class InterParkBookResponse {
 	private String publishedDate;
 	private int price;
 	private String image;
-	private int categoryId;
+	private Long categoryId;
 	private String publisher;
 	private String author;
 	private String isbn;

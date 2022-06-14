@@ -82,8 +82,10 @@ public class InterParkAPIService {
 									b.setImage(parser.nextText());
 								break;
 							case "categoryId":
-								if (b != null)
-									b.setCategoryId(Integer.parseInt(parser.nextText()));
+								try {
+									if (b != null)
+										b.setCategoryId(Long.parseLong(parser.nextText()));
+								} catch (Exception e) {}
 								break;
 							case "publisher":
 								if (b != null)
