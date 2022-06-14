@@ -11,19 +11,25 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.study.www.town.dto.TownDto;
 
 public class ReverseGeocoding {
 	private String apiurl = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc";
-	private String clientId = "zm0p3diwp9";
-	private String clientKey = "GSHzx52UKdBkcXiu6z3bNZ8TNgQgCFT3TelH7uXo";
+
+	@Value("${naver.map.clientId}")
+	private String clientId;
+	@Value("${naver.map.clientSecret}")
+	private String clientKey;
 
 	public TownDto getAddress(Double latitude, Double longitude) {
 
 		String api = apiurl + "?coords=" + longitude + "," + latitude + "&orders=legalcode&output=json";
 		StringBuffer sb = new StringBuffer();
 		TownDto townDto = new TownDto();
+
+		System.out.println("clientId:" + clientId + " , clientKey : " + clientKey);
 
 		try {
 			URL url = new URL(api);
