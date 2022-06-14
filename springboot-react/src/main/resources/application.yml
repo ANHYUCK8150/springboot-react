@@ -108,7 +108,13 @@ spring:
           tokenUri: https://kauth.kakao.com/oauth/token
           userInfoUri: https://kapi.kakao.com/v2/user/me
           userNameAttribute: id
-
+interpark:
+  book:
+    key: 4A81C422AA822396B97B0A389776657492A1407AA324CD19E535359E5054D276
+naver:
+  map:
+    clientId: zm0p3diwp9
+    clientSecret: GSHzx52UKdBkcXiu6z3bNZ8TNgQgCFT3TelH7uXo
 # 토큰 관련 secret Key 및 RedirectUri 설정
 app:
   auth:
