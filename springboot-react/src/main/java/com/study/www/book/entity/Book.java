@@ -35,7 +35,7 @@ public class Book {
 	private String image;
 
 	@Column
-	private int categoryId;
+	private Long categoryId;
 
 	@Column
 	private String publisher;
@@ -47,7 +47,8 @@ public class Book {
 	private String isbn;
 
 	@Builder
-	public Book(Long id, String name, String description, String publishedDate, int price, String image, int categoryId,
+	public Book(Long id, String name, String description, String publishedDate, int price, String image,
+		Long categoryId,
 		String publisher, String author, String isbn) {
 		this.id = id;
 		this.name = name;
